@@ -23,7 +23,7 @@ GRIS = "F2F5F7"
 GRIS_CLARO = "FFFFFF"
 CREMA = "FFF7E6"
 BORDE = "D3DCE3"
-FUENTE = "Calibri"
+FUENTE = "Arial"
 MONO = "Consolas"
 AUTOR = "Samuel Eduardo Bugueno Vega"
 REPO = "https://github.com/samueleduardobuguenovega-lang/ProyectoFirebase"
@@ -123,7 +123,14 @@ def configurar(doc, titulo_corto):
 
     pie = seccion.footer.paragraphs[0]
     pie.text = ""
-    pie.paragraph_format.tab_stops.add_tab_stop(Cm(16.6), WD_TAB_ALIGNMENT.RIGHT)
+    # El estilo de pie trae tabulaciones centradas propias: se anulan y se
+    # define una sola tabulacion derecha al borde del area de texto.
+    pPr = pie._p.get_or_add_pPr()
+    tabs = _el("w:tabs")
+    for pos in (4680, 9360):
+        tabs.append(_el("w:tab", val="clear", pos=pos))
+    tabs.append(_el("w:tab", val="right", pos=9412))
+    pPr.append(tabs)
     borde_inferior(pie, PRIMARIO, 6)
     run = pie.add_run("%s  \u00b7  %s\t" % (titulo_corto, AUTOR))
     run.font.size = Pt(8)
@@ -319,8 +326,25 @@ def imagen(doc, directorio, alt, ruta):
         run.italic = True
         run.font.color.rgb = RGBColor.from_string("B00020")
         return
-    doc.add_picture(destino, width=Cm(13))
+    # Las capturas del telefono son verticales: se escalan por alto para que
+    # quepan en la pagina; las horizontales se escalan por ancho.
+    alto = None
+    ancho = Cm(12)
+    try:
+        from PIL import Image
+        with Image.open(destino) as im:
+            ancho_px, alto_px = im.size
+        if alto_px / float(ancho_px) > 1.2:
+            ancho, alto = Cm(8), Cm(17.5)
+    except Exception:
+        pass
+    if alto is not None:
+        doc.add_picture(destino, width=ancho, height=alto)
+    else:
+        doc.add_picture(destino, width=ancho)
     doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+    doc.paragraphs[-1].paragraph_format.keep_with_next = True
+    doc.paragraphs[-1].paragraph_format.space_before = Pt(6)
     if alt:
         pie = doc.add_paragraph()
         pie.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -342,7 +366,7 @@ def convertir(origen, destino):
         m = RE_META.match(linea.strip())
         if m:
             metadatos.append((m.group("clave").strip(), m.group("valor").strip()))
-    subtitulo = next((valor for clave, valor in metadatos if clave.lower().startswith("actividad")), "")
+    subtitulo = ""
     corto = re.sub(r"\s+[—-]\s+.*$", "", titulo.replace("Informe ", ""))
     corto = " ".join(corto.split()[:3])
 
