@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Reglas de la etapa de pruebas de la asignatura: acceso abierto a la
+    // coleccion mascotas. NO usar en produccion.
+    match /mascotas/{documento} {
+      allow read, write: if true;
+    }
+
+    // Todo lo demas queda cerrado.
+    match /{documento=**} {
+      allow read, write: if false;
+    }
+  }
+}

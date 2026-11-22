@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "000000000000",
-    "project_id": "proyecto-firebase-placeholder",
-    "storage_bucket": "proyecto-firebase-placeholder.appspot.com"
+    "project_number": "628737010825",
+    "project_id": "mascotas-firestore-u3",
+    "storage_bucket": "mascotas-firestore-u3.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "mobilesdk_app_id": "1:628737010825:android:7efabc4d5251d7d49f2a58",
         "android_client_info": {
           "package_name": "com.stomas.proyectofirebase"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyPlaceholderReemplazarConLaClaveReal00"
+          "current_key": "AIzaSyBJTePd7OMcok4q0lWaZaQ2rZwqxbXgXhY"
         }
       ],
       "services": {

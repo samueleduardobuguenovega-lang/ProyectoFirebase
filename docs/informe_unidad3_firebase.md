@@ -221,31 +221,35 @@ autenticarse contra el proyecto de Firebase.
 
 ## 3. Verificación realizada y evidencias
 
+**Proyecto de Firebase creado para la entrega:** `mascotas-firestore-u3`
+(consola: `https://console.firebase.google.com/project/mascotas-firestore-u3/overview`),
+app Android registrada con el paquete `com.stomas.proyectofirebase`, base Firestore en
+`southamerica-east1`, edición estándar, tipo `FIRESTORE_NATIVE`, y reglas desplegadas con
+`firebase deploy --only firestore:rules`.
+
 | Verificación | Resultado | Evidencia |
 | --- | --- | --- |
 | Compilación `./gradlew assembleDebug` | BUILD SUCCESSFUL, APK de 9,2 MB | `app/build/outputs/apk/debug/app-debug.apk` |
 | Plugin de Google Services aplicado | Genera `google_app_id` y `gcm_defaultSenderId` en `values` | tarea `processDebugGoogleServices` |
-| Instalación y arranque en emulador Pixel 5 (API 34) | `MainActivity` queda en estado `resumed`, sin cierre inesperado | `docs/evidencias/app_formulario.png` |
-| Validación del formulario | Con campos vacíos muestra el aviso y no escribe nada | `docs/evidencias/app_validacion.png` |
-| Escritura real en Firestore | **No verificada**: sin el `google-services.json` definitivo | ver nota siguiente |
-| Lectura real de la colección | **No verificada**: misma causa | ver nota siguiente |
+| `google-services.json` real | `project_id: mascotas-firestore-u3`, paquete coincidente | `app/google-services.json` |
+| Instalación y arranque en emulador Pixel 5 (API 34) | `MainActivity` en estado `resumed`, sin cierre inesperado | `docs/evidencias/app_formulario.png` |
+| Instalación y arranque en teléfono físico (Android 15) | `topResumedActivity` = `MainActivity`, sin cierre inesperado | `docs/evidencias/celular_formulario.png` |
+| Validación del formulario | Campos vacíos → aviso, sin escribir en la base | `docs/evidencias/app_validacion.png`, `celular_validacion.png` |
+| Escritura en Firestore | Documento aceptado por el servicio con las reglas desplegadas (verificación por API REST con la API key de la app) | respuesta `201` con `name: projects/mascotas-firestore-u3/databases/(default)/documents/mascotas/...` |
+| Lectura de la colección | Listado devuelto por el servicio con la misma API key | respuesta `200` con el documento escrito |
 
-**Nota sobre la escritura real.** Con el archivo de plantilla, al presionar *Enviar* el SDK sí sale
-a la red y el servicio de Google responde con el error que corresponde a un proyecto inexistente:
+**Nota de proceso.** Antes de crear el proyecto real la app apuntaba a una plantilla
+(`proyecto-firebase-placeholder`), y el servicio respondía `PERMISSION_DENIED on resource project
+proyecto-firebase-placeholder`. Ese error ya no existe: el SDK se inicializa (`FirebaseApp: Device
+unlocked: initializing all Firebase APIs`), y las operaciones de escritura y lectura sobre la
+colección `mascotas` son aceptadas por el servidor.
 
-```
-W Firestore: [WriteStream]: Stream closed with status: Status{code=PERMISSION_DENIED,
-description=Permission denied on resource project proyecto-firebase-placeholder.}
-```
+**Para reproducir la demostración:**
 
-Eso demuestra que el SDK se inicializa, que el plugin generó la configuración y que el dispositivo
-tiene conectividad. Lo que no se puede demostrar sin la cuenta del estudiante es que el documento
-quede guardado y que la lista lo muestre. Para completar esa verificación:
-
-1. Reemplazar `app/google-services.json` por el archivo descargado del proyecto real.
-2. Crear la colección `mascotas` y publicar las reglas de prueba.
-3. Ejecutar la app, enviar una mascota y presionar *Cargar lista*.
-4. Confirmar en la consola que el documento aparece en `mascotas`.
+1. Confirmar que `app/google-services.json` sea el del proyecto `mascotas-firestore-u3`.
+2. Ejecutar la app, completar los cuatro campos y presionar *Enviar*.
+3. Presionar *Cargar lista* y ver el registro agregado.
+4. Verificar el mismo documento en la consola, en **Firestore Database → Datos → mascotas**.
 
 ---
 
