@@ -219,6 +219,36 @@ autenticarse contra el proyecto de Firebase.
 
 ---
 
+## 3. Verificación realizada y evidencias
+
+| Verificación | Resultado | Evidencia |
+| --- | --- | --- |
+| Compilación `./gradlew assembleDebug` | BUILD SUCCESSFUL, APK de 9,2 MB | `app/build/outputs/apk/debug/app-debug.apk` |
+| Plugin de Google Services aplicado | Genera `google_app_id` y `gcm_defaultSenderId` en `values` | tarea `processDebugGoogleServices` |
+| Instalación y arranque en emulador Pixel 5 (API 34) | `MainActivity` queda en estado `resumed`, sin cierre inesperado | `docs/evidencias/app_formulario.png` |
+| Validación del formulario | Con campos vacíos muestra el aviso y no escribe nada | `docs/evidencias/app_validacion.png` |
+| Escritura real en Firestore | **No verificada**: sin el `google-services.json` definitivo | ver nota siguiente |
+| Lectura real de la colección | **No verificada**: misma causa | ver nota siguiente |
+
+**Nota sobre la escritura real.** Con el archivo de plantilla, al presionar *Enviar* el SDK sí sale
+a la red y el servicio de Google responde con el error que corresponde a un proyecto inexistente:
+
+```
+W Firestore: [WriteStream]: Stream closed with status: Status{code=PERMISSION_DENIED,
+description=Permission denied on resource project proyecto-firebase-placeholder.}
+```
+
+Eso demuestra que el SDK se inicializa, que el plugin generó la configuración y que el dispositivo
+tiene conectividad. Lo que no se puede demostrar sin la cuenta del estudiante es que el documento
+quede guardado y que la lista lo muestre. Para completar esa verificación:
+
+1. Reemplazar `app/google-services.json` por el archivo descargado del proyecto real.
+2. Crear la colección `mascotas` y publicar las reglas de prueba.
+3. Ejecutar la app, enviar una mascota y presionar *Cargar lista*.
+4. Confirmar en la consola que el documento aparece en `mascotas`.
+
+---
+
 ## Anexo — Repaso final del material: necesidad técnica y componente
 
 | Necesidad | Componente |
