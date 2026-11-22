@@ -2,13 +2,28 @@
 
 Uso: python tools/md2docx.py docs/informe_unidad3_firebase.md docs/Informe_Unidad3_Firebase.docx
 Soporta: encabezados (#..####), listas con -, tablas de tuberias, bloques de codigo,
-citas (>), negritas **x**, codigo en linea `x` y reglas horizontales.
+citas (>), negritas **x**, codigo en linea `x`, reglas horizontales y imagenes
+Markdown ![texto](ruta.png) en una linea propia (ancho fijo de 10 cm).
 """
+import os
 import re
 import sys
 
 from docx import Document
-from docx.shared import Pt, RGBColor
+from docx.shared import Cm, Pt, RGBColor
+
+IMAGEN_LINEA = re.compile(r"^!\[[^\]]*\]\(([^)]+)\)$")
+
+
+def add_imagen(doc, directorio, ruta_relativa):
+    """Inserta la imagen relativa al Markdown; si no existe, avisa sin fallar."""
+    ruta = os.path.join(directorio, ruta_relativa)
+    if not os.path.isfile(ruta):
+        par = doc.add_paragraph()
+        run = par.add_run("[Advertencia: imagen no encontrada: %s]" % ruta_relativa)
+        run.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
+        return
+    doc.add_picture(ruta, width=Cm(10))
 
 
 def add_runs(par, text, mono=False):
@@ -55,6 +70,8 @@ def convertir(origen, destino):
     estilo.font.name = "Calibri"
     estilo.font.size = Pt(11)
 
+    directorio = os.path.dirname(os.path.abspath(origen))
+
     with open(origen, encoding="utf-8") as fh:
         lineas = fh.read().splitlines()
 
@@ -74,6 +91,14 @@ def convertir(origen, destino):
             continue
         if en_codigo:
             codigo.append(linea)
+            continue
+
+        imagen = IMAGEN_LINEA.match(crudo.strip())
+        if imagen:
+            if tabla:
+                flush_table(doc, tabla)
+                tabla = []
+            add_imagen(doc, directorio, imagen.group(1))
             continue
 
         if crudo.startswith("|"):

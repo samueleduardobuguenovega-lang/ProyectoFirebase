@@ -49,6 +49,11 @@ APK resultante: `app/build/outputs/apk/debug/app-debug.apk`.
 
 ## Documentación
 
-- `docs/informe_unidad3_firebase.md` — informe completo (investigación, modelo de datos, cierre).
-- `docs/Informe_Unidad3_Firebase.docx` — mismo informe en Word, listo para Moodle.
-- `tools/md2docx.py` — genera el DOCX a partir del Markdown.
+- `docs/informe_unidad3_firebase.md` — informe completo (investigación, modelo de datos, procedimiento, verificación).
+- `docs/Informe_Unidad3_Firebase.docx` — mismo informe en Word, con las capturas embebidas.
+- `docs/Informe_3.1_Firebase.docx` — entregable de la actividad 3.1 (investigación, modelo de datos, cierre y anexo).
+- `docs/Informe_3.2_Firebase.docx` — entregable de la actividad 3.2 (procedimiento, verificación y prueba en el teléfono).
+- `docs/evidencias/` — capturas de la prueba en el dispositivo.
+- `tools/md2docx.py` — genera los DOCX a partir del Markdown (soporta imágenes).
+- `tools/split_informe.py` — parte el informe completo en los dos entregables.
+- `firestore.rules` — reglas desplegadas en el proyecto `mascotas-firestore-u3`.
