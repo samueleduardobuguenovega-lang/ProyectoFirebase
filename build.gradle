@@ -1,0 +1,5 @@
+// Plugins declarados a nivel de proyecto; las versiones se aplican en :app
+plugins {
+    id 'com.android.application' version '8.13.2' apply false
+    id 'com.google.gms.google-services' version '4.4.3' apply false
+}

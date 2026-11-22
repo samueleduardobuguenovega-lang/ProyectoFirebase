@@ -1,0 +1,20 @@
+# Build
+*.iml
+.gradle/
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# IDE
+.idea/
+*.hprof
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Firma y secretos locales
+*.jks
+*.keystore
