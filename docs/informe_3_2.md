@@ -1,6 +1,6 @@
 # Informe Actividad 3.2 — Desarrollo de funcionalidades avanzadas con Firebase
 
-**Autor:** Samuel Eduardo Bugueno Vega
+**Autor:** Samuel Eduardo Bugueño Vega
 **Fecha:** 22 de noviembre de 2026
 **Proyecto de Firebase:** `mascotas-firestore-u3`
 **Asignatura:** Programación Android (IEI-093)

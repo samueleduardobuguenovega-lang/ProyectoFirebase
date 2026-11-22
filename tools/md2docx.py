@@ -25,7 +25,7 @@ CREMA = "FFF7E6"
 BORDE = "D3DCE3"
 FUENTE = "Arial"
 MONO = "Consolas"
-AUTOR = "Samuel Eduardo Bugueno Vega"
+AUTOR = "Samuel Eduardo Bugueño Vega"
 REPO = "https://github.com/samueleduardobuguenovega-lang/ProyectoFirebase"
 FIREBASE = "mascotas-firestore-u3"
 
@@ -106,6 +106,31 @@ def configurar(doc, titulo_corto):
     seccion.page_height = Cm(29.7)
     for lado in ("top_margin", "bottom_margin", "left_margin", "right_margin"):
         setattr(seccion, lado, Cm(2.2))
+
+    # Idioma del documento en español: sin esto LibreOffice y Word revisan la
+    # ortografia en ingles y marcan todo el texto en rojo.
+    doc.core_properties.language = "es-CL"
+    # Idioma por defecto de todo el documento (docDefaults) a espanol.
+    predeterminados = doc.styles.element.find(qn("w:docDefaults"))
+    if predeterminados is not None:
+        rPrDef = predeterminados.find(qn("w:rPrDefault"))
+        rPr = rPrDef.find(qn("w:rPr")) if rPrDef is not None else None
+        if rPr is not None:
+            idioma = rPr.find(qn("w:lang"))
+            if idioma is None:
+                idioma = OxmlElement("w:lang")
+                rPr.append(idioma)
+            idioma.set(qn("w:val"), "es-CL")
+            idioma.set(qn("w:eastAsia"), "es-CL")
+
+    for nombre in ("Normal", "Heading 1", "Heading 2", "Heading 3", "Header", "Footer"):
+        rPr = doc.styles[nombre].element.get_or_add_rPr()
+        idioma = rPr.find(qn("w:lang"))
+        if idioma is None:
+            idioma = OxmlElement("w:lang")
+            rPr.append(idioma)
+        idioma.set(qn("w:val"), "es-CL")
+        idioma.set(qn("w:eastAsia"), "es-CL")
 
     normal = doc.styles["Normal"]
     normal.font.name = FUENTE
