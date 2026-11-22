@@ -104,26 +104,18 @@ resultado (`Task` en lugar de promesa) y acepté que las llamadas son asíncrona
 ### 1.3 Preguntas de cierre — Actividad 3.1
 
 **¿Qué aprendiste de la actividad realizada?**
-Aprendí que integrar una base de datos externa no empieza en el código: empieza en la consola,
-registrando el paquete exacto de la app y bajando un archivo de configuración. Comprobé que si el
-`applicationId` y el `package_name` del `google-services.json` no coinciden letra por letra, el
-plugin falla al compilar con *"File google-services.json is missing"* o con un error de coincidencia
-de paquete. También aprendí que las escrituras y lecturas son asíncronas y que por eso actualicé la
-interfaz en callbacks, no en la línea siguiente a la llamada.
+Que lo importante pasa antes del código: el paquete de la app y el `google-services.json` tienen que
+coincidir exacto, si no el proyecto no compila. Y que la base responde después, así que la pantalla
+se actualiza en el callback.
 
 **¿En qué ámbitos puedes utilizar o aplicar lo realizado?**
-Lo puedo aplicar en cualquier app que necesite datos compartidos entre dispositivos sin montar un
-servidor propio: registro de clientes, inventario, pedidos, asistencia, catálogos, encuestas. Me es
-directamente aplicable al proyecto de huerto inteligente, donde la app debe guardar lecturas de
-sensores y registros de riego consultables desde varios teléfonos.
+En cualquier app donde varias personas necesiten los mismos datos sin tener un servidor propio:
+inventario, pedidos, asistencia o las lecturas de un huerto.
 
 **¿Qué aprendiste de Firebase y los conceptos estudiados?**
-Aprendí que Firebase es un conjunto de servicios y no solo una base de datos, y que elegir el
-servicio correcto importa: Firestore para registros estructurados con consultas, Realtime Database
-para datos que cambian muchas veces por segundo, Storage para archivos, Authentication para
-identidad y Cloud Messaging para avisos. Sobre las tecnologías de transporte: MQTT es el protocolo
-del mundo de los sensores, WebSocket el del tiempo real en la web, y Firestore esconde ambos detrás
-de su SDK.
+Que Firebase son varios servicios y hay que elegir cuál conviene: Firestore para registros, Storage
+para archivos, Authentication para entrar. Y que MQTT es lo típico de los sensores, mientras que
+Firestore me da el tiempo real sin que yo vea el WebSocket por debajo.
 
 ---
 

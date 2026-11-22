@@ -121,23 +121,16 @@ implementé y verifiqué con compilación real. Estado por funcionalidad:
 ### 2.4 Preguntas de cierre — Actividad 3.2
 
 **¿Qué aprendiste de la actividad realizada?**
-Aprendí que la parte difícil de Firebase no es la base de datos sino la configuración: plugin de
-Google Services, archivo JSON, BOM de versiones y reglas de seguridad. También que el resultado de
-una escritura se confirma en un callback, y que refrescar la lista exige volver a consultar o
-mantener un escucha activo con `addSnapshotListener`.
+Que lo difícil no es guardar los datos, es dejar bien la configuración: plugin, JSON, versiones y
+reglas. Y que para refrescar la lista tengo que volver a consultar la base.
 
 **¿En qué ámbitos puedes utilizar o aplicar lo realizado?**
-Lo puedo aplicar en inventarios y registros de cualquier tipo donde varias personas deban ver los
-mismos datos al instante: bodega de una empresa, control de asistencia, catálogo de productos,
-registro de riegos de un huerto. El mismo patrón formulario + lista me sirve como base de cualquier
-CRUD en la nube.
+En registros donde varias personas tienen que ver lo mismo al instante: bodega, catálogo,
+asistencia o los riegos de un huerto.
 
 **¿Pudiste realizar toda la actividad con los ejemplos entregados?**
-Sí, con tres ajustes que hice: la versión de Firestore la dejé al BOM, omití la biblioteca antigua de
-multidex y usé `compileSdk 34` desde el principio para no repetir el error que la propia pauta
-corrige. La conexión contra la base real exigía reemplazar `app/google-services.json` por el
-archivo generado con mi cuenta; eso lo hice con la CLI y desde entonces la app se autentica contra
-el proyecto `mascotas-firestore-u3`.
+Sí. Solo cambié tres cosas: dejé la versión de Firestore al BOM, saqué la librería vieja de multidex
+y usé `compileSdk 34` desde el principio.
 
 ---
 
