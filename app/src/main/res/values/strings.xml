@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mascotas Firestore</string>
+
+    <!-- Formulario -->
+    <string name="title_form">Registro de mascotas</string>
+    <string name="hint_codigo">Código</string>
+    <string name="hint_nombre">Nombre</string>
+    <string name="hint_dueno">Dueño</string>
+    <string name="hint_direccion">Dirección</string>
+
+    <!-- Botones -->
+    <string name="btn_enviar">Enviar</string>
+    <string name="btn_cargar">Cargar lista</string>
+
+    <!-- Mensajes -->
+    <string name="msg_campos_vacios">Completa los cuatro campos antes de enviar</string>
+    <string name="msg_enviado_ok">Datos enviados a Firestore correctamente</string>
+    <string name="msg_error_enviar">Error al enviar datos a Firestore: %1$s</string>
+    <string name="msg_error_leer">Error al obtener datos de Firestore: %1$s</string>
+    <string name="msg_lista_vacia">La colección mascotas está vacía</string>
+</resources>

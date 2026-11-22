@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Icono de Bodega Express: una caja de inventario vista en perspectiva leve.
+  Toda la figura cabe dentro de la zona segura de 66x66 del icono adaptativo
+  (centrada en 54,54), asi que ningun recorte circular o cuadrado la corta.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Tapa de la caja (cara superior en perspectiva) -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M29,45 L79,45 L72,31 L36,31 Z" />
+    <!-- Cuerpo de la caja (cara frontal) -->
+    <path
+        android:fillColor="#FFD8E7F8"
+        android:pathData="M29,45 H79 V70 A4,4 0 0 1 75,74 H33 A4,4 0 0 1 29,70 Z" />
+    <!-- Cinta de embalaje sobre la cara frontal (color de acento de la app) -->
+    <path
+        android:fillColor="#FFE76E1A"
+        android:pathData="M48,45 H60 V74 H48 Z" />
+    <!-- La misma cinta sobre la tapa, siguiendo la perspectiva -->
+    <path
+        android:fillColor="#FFE76E1A"
+        android:pathData="M48,45 L60,45 L58.32,31 L49.68,31 Z" />
+</vector>
